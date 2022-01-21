@@ -10,9 +10,9 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds.uds_config_tool import DecodeFunctions
+from .. import DecodeFunctions
 import sys
-from uds.uds_config_tool.FunctionCreation.iServiceMethodFactory import IServiceMethodFactory
+from .iServiceMethodFactory import IServiceMethodFactory
 
 
 SUPPRESS_RESPONSE_BIT = 0x80
@@ -76,7 +76,7 @@ class ECUResetMethodFactory(IServiceMethodFactory):
 
             if(semantic == 'SERVICE-ID'):
                 serviceId = [int(param.find('CODED-VALUE').text)]
-				
+
             elif(semantic == 'SUBFUNCTION'):
                 resetType = [int(param.find('CODED-VALUE').text)]
                 if resetType[0] >= SUPPRESS_RESPONSE_BIT:
@@ -184,11 +184,11 @@ class ECUResetMethodFactory(IServiceMethodFactory):
         except:
             pass
 
-        # The values in the response are SID, resetType, and optionally the powerDownTime (only for resetType 0x04). Checking is handled in the check function, 
+        # The values in the response are SID, resetType, and optionally the powerDownTime (only for resetType 0x04). Checking is handled in the check function,
         # so must be present and ok. This function is only required to return the resetType and powerDownTime (if present).
 
         positiveResponseElement = xmlElements[(diagServiceElement.find('POS-RESPONSE-REFS')).find('POS-RESPONSE-REF').attrib['ID-REF']]
-		
+
         shortName = diagServiceElement.find('SHORT-NAME').text
         encodePositiveResponseFunctionName = "encode_{0}".format(shortName)
 

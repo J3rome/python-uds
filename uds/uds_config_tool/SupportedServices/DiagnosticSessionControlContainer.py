@@ -12,7 +12,7 @@ __status__ = "Development"
 
 defaultTPTimeout = 10  # ... (s): default to sending tester present 10s after last request (if required) - note: this includes after previous TesterPresent for repeating operation
 
-from uds.uds_config_tool.SupportedServices.iContainer import iContainer
+from .iContainer import iContainer
 from types import MethodType
 import time
 
@@ -29,7 +29,7 @@ class DiagnosticSessionControlContainer(object):
         self.testerPresent = {}
         self.currentSession = None
         self.lastSend = None
-		
+
     ##
     # @brief this method is bound to an external Uds object, referenced by target, so that it can be called
     # as one of the in-built methods. uds.diagnosticSessionControl("session type") It does not operate
@@ -52,7 +52,7 @@ class DiagnosticSessionControlContainer(object):
 
         # Call the sequence of functions to execute the Diagnostic Session Control request/response action ...
         # ==============================================================================
-		
+
         # Code additions to support interaction with tester present for a given diagnostic session ...
         target.diagnosticSessionControlContainer.currentSession = parameter
 		# Note: if testerPresent is set, then timeout is checked every second, so timeout values less than second will always be equivalent to one second.
@@ -64,7 +64,7 @@ class DiagnosticSessionControlContainer(object):
         if checkFunction is None or positiveResponseFunction is None:  # ... i.e. we only have a send_only service specified in the ODX
             suppressResponse = True
 
-        # Create the request. Note: we do not have to pre-check the dataRecord as this action is performed by 
+        # Create the request. Note: we do not have to pre-check the dataRecord as this action is performed by
         # the recipient (the response codes 0x?? and 0x?? provide the necessary cover of errors in the request) ...
         request = requestFunction(suppressResponse)
 
@@ -77,7 +77,7 @@ class DiagnosticSessionControlContainer(object):
 
             # All is still good, so return the response (currently this function does nothing, but including it here as a hook in case that changes) ...
             return positiveResponseFunction(response)
-			
+
 		# ... else ...
         # Send request and receive the response ...
         response = target.send(request,responseRequired=False) # ... this suppresses any response handling (not expected)
@@ -153,4 +153,3 @@ class DiagnosticSessionControlContainer(object):
     def add_positiveResponseFunction(self, aFunction, dictionaryEntry):
         if aFunction is not None: # ... allow for a send only version being processed
             self.positiveResponseFunctions[dictionaryEntry] = aFunction
-

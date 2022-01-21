@@ -1,10 +1,10 @@
 import can
 from can.interfaces import pcan, vector
-from uds.uds_configuration.Config import Config
+from ....uds_configuration.Config import Config
 from os import path
 from platform import system
 #from uds import CanConnection
-from uds.uds_communications.TransportProtocols.Can.CanConnection import CanConnection
+from .CanConnection import CanConnection
 
 # used to conditionally import socketcan for linux to avoid error messages
 if system() == "Linux":
@@ -45,7 +45,7 @@ class CanConnectionFactory(object):
             else:
                 CanConnectionFactory.connections[channel].addCallback(callback)
                 CanConnectionFactory.connections[channel].addFilter(filter)
-                
+
             return CanConnectionFactory.connections[channel]
 
         elif connectionType == 'vector':
@@ -107,4 +107,3 @@ class CanConnectionFactory(object):
 
         if 'channel' in kwargs:
             CanConnectionFactory.config['vector']['channel'] = kwargs['channel']
-

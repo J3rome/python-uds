@@ -10,16 +10,16 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds.uds_config_tool import DecodeFunctions
+from .. import DecodeFunctions
 import sys
-from uds.uds_config_tool.FunctionCreation.iServiceMethodFactory import IServiceMethodFactory
+from .iServiceMethodFactory import IServiceMethodFactory
 
 
 # When encode the dataRecord for transmission we have to allow for multiple elements in the data record
 # i.e. 'value1' - for a single value, or [('param1','value1'),('param2','value2')]  for more complex data records
 requestFuncTemplate = str("def {0}(FormatIdentifier, MemoryAddress, MemorySize):\n"
                           "    addrlenfid = [len(MemoryAddress) + (len(MemorySize)<<4)]\n"
-                          "    return {1} + FormatIdentifier + addrlenfid + MemoryAddress + MemorySize")						  
+                          "    return {1} + FormatIdentifier + addrlenfid + MemoryAddress + MemorySize")
 
 checkFunctionTemplate = str("def {0}(input):\n"
                             "    serviceIdExpected = {1}\n"
@@ -118,7 +118,7 @@ class RequestDownloadMethodFactory(IServiceMethodFactory):
                 elif(semantic == 'DATA'):
                     dataObjectElement = xmlElements[(param.find('DOP-REF')).attrib['ID-REF']]
                     break
-				    # ... if we've gotten this far, then we probably have enough from the ODX to ensure we have the service defined ... following the spec from here on. 
+				    # ... if we've gotten this far, then we probably have enough from the ODX to ensure we have the service defined ... following the spec from here on.
 
                 else:
                     pass
@@ -166,7 +166,7 @@ class RequestDownloadMethodFactory(IServiceMethodFactory):
                 if semantic == 'DATA':
                     dataObjectElement = xmlElements[(param.find('DOP-REF')).attrib['ID-REF']]
                     break
-				    # ... if we've gotten this far, then we probably have enough from the ODX to ensure we have the service defined ... following the spec from here on. 
+				    # ... if we've gotten this far, then we probably have enough from the ODX to ensure we have the service defined ... following the spec from here on.
 
             except:
                 pass

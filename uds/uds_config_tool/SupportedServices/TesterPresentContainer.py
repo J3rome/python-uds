@@ -10,7 +10,7 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds.uds_config_tool.SupportedServices.iContainer import iContainer
+from .iContainer import iContainer
 from types import MethodType
 import threading
 import time
@@ -19,7 +19,7 @@ import time
 class TesterPresentContainer(object):
 
     __metaclass__ = iContainer
-	
+
     testerPresentThreadRef = None
     testerPresentTargets = set()
 
@@ -72,7 +72,7 @@ class TesterPresentContainer(object):
 
             # All is still good, so return the response (currently this function does nothing, but including it here as a hook in case that changes) ...
             return positiveResponseFunction(response)
-			
+
 		# ... else ...
         # Send request and receive the response ...
         response = target.send(request,responseRequired=False) # ... this suppresses any response handling (not expected)

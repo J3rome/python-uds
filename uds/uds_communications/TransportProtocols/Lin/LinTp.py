@@ -15,17 +15,17 @@ from time import sleep
 
 from lin import LinBus
 #from lin import LinBusFactory
-from uds import iTp
-from uds import Config
-from uds import ResettableTimer
-from uds import fillArray
+from .... import iTp
+from .... import Config
+from .... import ResettableTimer
+from .... import fillArray
 
 
 # types
-from uds.uds_communications.TransportProtocols.Lin.LinTpTypes import LinTpState, LinTpMessageType
+from .LinTpTypes import LinTpState, LinTpMessageType
 
 # consts
-from uds.uds_communications.TransportProtocols.Lin.LinTpTypes import LINTP_MAX_PAYLOAD_LENGTH, N_PCI_INDEX, \
+from .LinTpTypes import LINTP_MAX_PAYLOAD_LENGTH, N_PCI_INDEX, \
     SINGLE_FRAME_DL_INDEX, SINGLE_FRAME_DATA_START_INDEX, \
     FIRST_FRAME_DL_INDEX_HIGH, FIRST_FRAME_DL_INDEX_LOW, FIRST_FRAME_DATA_START_INDEX, \
     CONSECUTIVE_FRAME_SEQUENCE_NUMBER_INDEX, CONSECUTIVE_FRAME_SEQUENCE_DATA_START_INDEX

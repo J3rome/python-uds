@@ -9,7 +9,7 @@ __maintainer__ = "Richard Clubb"
 __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
-from uds import iTp
+from .... import iTp
 ##
 # @brief pads out an array with a fill value
 def fillArray(data, length, fillValue=0):

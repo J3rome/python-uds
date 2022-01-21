@@ -10,10 +10,10 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds import Config
-from uds import CanTp
-from uds import LinTp
-from uds import TestTp
+from ... import Config
+from ... import CanTp
+from ... import LinTp
+from ... import TestTp
 from os import path
 
 

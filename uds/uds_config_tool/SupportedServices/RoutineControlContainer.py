@@ -10,7 +10,7 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds.uds_config_tool.SupportedServices.iContainer import iContainer
+from .iContainer import iContainer
 from types import MethodType
 
 
@@ -23,7 +23,7 @@ class RoutineControlContainer(object):
         self.checkFunctions = {}
         self.negativeResponseFunctions = {}
         self.positiveResponseFunctions = {}
- 
+
 
     ##
     # @brief this method is bound to an external Uds object, referenced by target, so that it can be called
@@ -49,7 +49,7 @@ class RoutineControlContainer(object):
         if checkFunction is None or positiveResponseFunction is None:
             suppressResponse = True
 
-        # Create the request. Note: we do not have to pre-check the dataRecord as this action is performed by 
+        # Create the request. Note: we do not have to pre-check the dataRecord as this action is performed by
         # the recipient (the response codes 0x?? and 0x?? provide the necessary cover of errors in the request) ...
         request = requestFunction(optionRecord,suppressResponse)
 
@@ -63,7 +63,7 @@ class RoutineControlContainer(object):
 
             # All is still good, so return the response (currently this function does nothing, but including it here as a hook in case that changes) ...
             return positiveResponseFunction(response)
-			
+
 		# ... else ...
         # Send request and receive the response ...
         response = target.send(request,responseRequired=False) # ... this suppresses any response handling (not expected)

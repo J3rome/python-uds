@@ -12,40 +12,40 @@ __status__ = "Development"
 
 import xml.etree.ElementTree as ET
 
-from uds.uds_config_tool.UtilityFunctions import isDiagServiceTransmissionOnly
-from uds.uds_communications.Uds.Uds import Uds
-from uds.uds_config_tool.SupportedServices.DiagnosticSessionControlContainer import DiagnosticSessionControlContainer
-from uds.uds_config_tool.FunctionCreation.DiagnosticSessionControlMethodFactory import DiagnosticSessionControlMethodFactory
-from uds.uds_config_tool.SupportedServices.ECUResetContainer import ECUResetContainer
-from uds.uds_config_tool.FunctionCreation.ECUResetMethodFactory import ECUResetMethodFactory
-from uds.uds_config_tool.SupportedServices.ReadDataByIdentifierContainer import ReadDataByIdentifierContainer
-from uds.uds_config_tool.FunctionCreation.ReadDataByIdentifierMethodFactory import ReadDataByIdentifierMethodFactory
-from uds.uds_config_tool.SupportedServices.WriteDataByIdentifierContainer import WriteDataByIdentifierContainer
-from uds.uds_config_tool.FunctionCreation.WriteDataByIdentifierMethodFactory import WriteDataByIdentifierMethodFactory
-from uds.uds_config_tool.SupportedServices.ClearDTCContainer import ClearDTCContainer
-from uds.uds_config_tool.FunctionCreation.ClearDTCMethodFactory import ClearDTCMethodFactory
-from uds.uds_config_tool.SupportedServices.ReadDTCContainer import ReadDTCContainer
-from uds.uds_config_tool.FunctionCreation.ReadDTCMethodFactory import ReadDTCMethodFactory
-from uds.uds_config_tool.SupportedServices.InputOutputControlContainer import InputOutputControlContainer
-from uds.uds_config_tool.FunctionCreation.InputOutputControlMethodFactory import InputOutputControlMethodFactory
-from uds.uds_config_tool.SupportedServices.RoutineControlContainer import RoutineControlContainer
-from uds.uds_config_tool.FunctionCreation.RoutineControlMethodFactory import RoutineControlMethodFactory
-from uds.uds_config_tool.SupportedServices.RequestDownloadContainer import RequestDownloadContainer
-from uds.uds_config_tool.FunctionCreation.RequestDownloadMethodFactory import RequestDownloadMethodFactory
+from .UtilityFunctions import isDiagServiceTransmissionOnly
+from ..uds_communications.Uds.Uds import Uds
+from .SupportedServices.DiagnosticSessionControlContainer import DiagnosticSessionControlContainer
+from .FunctionCreation.DiagnosticSessionControlMethodFactory import DiagnosticSessionControlMethodFactory
+from .SupportedServices.ECUResetContainer import ECUResetContainer
+from .FunctionCreation.ECUResetMethodFactory import ECUResetMethodFactory
+from .SupportedServices.ReadDataByIdentifierContainer import ReadDataByIdentifierContainer
+from .FunctionCreation.ReadDataByIdentifierMethodFactory import ReadDataByIdentifierMethodFactory
+from .SupportedServices.WriteDataByIdentifierContainer import WriteDataByIdentifierContainer
+from .FunctionCreation.WriteDataByIdentifierMethodFactory import WriteDataByIdentifierMethodFactory
+from .SupportedServices.ClearDTCContainer import ClearDTCContainer
+from .FunctionCreation.ClearDTCMethodFactory import ClearDTCMethodFactory
+from .SupportedServices.ReadDTCContainer import ReadDTCContainer
+from .FunctionCreation.ReadDTCMethodFactory import ReadDTCMethodFactory
+from .SupportedServices.InputOutputControlContainer import InputOutputControlContainer
+from .FunctionCreation.InputOutputControlMethodFactory import InputOutputControlMethodFactory
+from .SupportedServices.RoutineControlContainer import RoutineControlContainer
+from .FunctionCreation.RoutineControlMethodFactory import RoutineControlMethodFactory
+from .SupportedServices.RequestDownloadContainer import RequestDownloadContainer
+from .FunctionCreation.RequestDownloadMethodFactory import RequestDownloadMethodFactory
 
-from uds.uds_config_tool.SupportedServices.SecurityAccessContainer import SecurityAccessContainer
-from uds.uds_config_tool.FunctionCreation.SecurityAccessMethodFactory import SecurityAccessMethodFactory
-from uds.uds_config_tool.SupportedServices.RequestUploadContainer import RequestUploadContainer
-from uds.uds_config_tool.FunctionCreation.RequestUploadMethodFactory import RequestUploadMethodFactory
-from uds.uds_config_tool.SupportedServices.TransferDataContainer import TransferDataContainer
-from uds.uds_config_tool.FunctionCreation.TransferDataMethodFactory import TransferDataMethodFactory
-from uds.uds_config_tool.SupportedServices.TransferExitContainer import TransferExitContainer
-from uds.uds_config_tool.FunctionCreation.TransferExitMethodFactory import TransferExitMethodFactory
-from uds.uds_config_tool.SupportedServices.TesterPresentContainer import TesterPresentContainer
-from uds.uds_config_tool.FunctionCreation.TesterPresentMethodFactory import TesterPresentMethodFactory
-from uds.uds_config_tool.ISOStandard.ISOStandard import IsoServices, IsoRoutineControlType, IsoInputOutputControlOptionRecord, IsoReadDTCSubfunction, IsoReadDTCStatusMask as Mask
+from .SupportedServices.SecurityAccessContainer import SecurityAccessContainer
+from .FunctionCreation.SecurityAccessMethodFactory import SecurityAccessMethodFactory
+from .SupportedServices.RequestUploadContainer import RequestUploadContainer
+from .FunctionCreation.RequestUploadMethodFactory import RequestUploadMethodFactory
+from .SupportedServices.TransferDataContainer import TransferDataContainer
+from .FunctionCreation.TransferDataMethodFactory import TransferDataMethodFactory
+from .SupportedServices.TransferExitContainer import TransferExitContainer
+from .FunctionCreation.TransferExitMethodFactory import TransferExitMethodFactory
+from .SupportedServices.TesterPresentContainer import TesterPresentContainer
+from .FunctionCreation.TesterPresentMethodFactory import TesterPresentMethodFactory
+from .ISOStandard.ISOStandard import IsoServices, IsoRoutineControlType, IsoInputOutputControlOptionRecord, IsoReadDTCSubfunction, IsoReadDTCStatusMask as Mask
 
-from uds.uds_config_tool.ISOStandard.ISOStandard import IsoServices
+from .ISOStandard.ISOStandard import IsoServices
 
 def get_serviceIdFromXmlElement(diagServiceElement, xmlElements):
 
@@ -335,7 +335,7 @@ def createUdsConnection(xmlFile, ecuName, ihexFile=None, **kwargs):
                 transferExitContainer.add_positiveResponseFunction(positiveResponseFunction, humanName)
 
             elif serviceId == IsoServices.TesterPresent:
-                # Note: Tester Present is presented here as an exposed service, but it will typically not be called directly, as we'll hook it 
+                # Note: Tester Present is presented here as an exposed service, but it will typically not be called directly, as we'll hook it
                 # in to keep the session alive automatically if requested (details to come, but this is just getting the comms into place).
                 testerPresentService_flag = True
                 requestFunc = TesterPresentMethodFactory.create_requestFunction(value, xmlElements)

@@ -10,13 +10,13 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds.uds_config_tool import DecodeFunctions
+from .. import DecodeFunctions
 import sys
-from uds.uds_config_tool.FunctionCreation.iServiceMethodFactory import IServiceMethodFactory
+from .iServiceMethodFactory import IServiceMethodFactory
 
 
 requestFuncTemplate = str("def {0}(blockSequenceCounter,parameterRecord):\n"
-                          "    return {1} + [blockSequenceCounter] + parameterRecord")						  
+                          "    return {1} + [blockSequenceCounter] + parameterRecord")
 
 checkFunctionTemplate = str("def {0}(input):\n"
                             "    serviceIdExpected = {1}\n"
@@ -67,8 +67,8 @@ class TransferDataMethodFactory(IServiceMethodFactory):
                                                 serviceId) # 1
         exec(funcString)
         return locals()[shortName]
-		
-		
+
+
     ##
     # @brief method to create the function to check the positive response for validity
     @staticmethod
@@ -107,7 +107,7 @@ class TransferDataMethodFactory(IServiceMethodFactory):
                     # ... locating the serviceId is sufficient for this service - semi-hardcoded, as for the request download
                 else:
                     pass
-					
+
             except:
                 #print(sys.exc_info())
                 pass
@@ -124,11 +124,11 @@ class TransferDataMethodFactory(IServiceMethodFactory):
     # @brief method to encode the positive response from the raw type to it physical representation
     @staticmethod
     def create_encodePositiveResponseFunction(diagServiceElement, xmlElements):
-        # The values in the response are SID, resetType, and optionally the powerDownTime (only for resetType 0x04). Checking is handled in the check function, 
+        # The values in the response are SID, resetType, and optionally the powerDownTime (only for resetType 0x04). Checking is handled in the check function,
         # so must be present and ok. This function is only required to return the resetType and powerDownTime (if present).
 
         positiveResponseElement = xmlElements[(diagServiceElement.find('POS-RESPONSE-REFS')).find('POS-RESPONSE-REF').attrib['ID-REF']]
-		
+
         shortName = diagServiceElement.find('SHORT-NAME').text
         encodePositiveResponseFunctionName = "encode_{0}".format(shortName)
 

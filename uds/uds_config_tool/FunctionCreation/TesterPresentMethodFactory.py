@@ -10,14 +10,14 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds.uds_config_tool import DecodeFunctions
+from .. import DecodeFunctions
 import sys
-from uds.uds_config_tool.FunctionCreation.iServiceMethodFactory import IServiceMethodFactory
+from .iServiceMethodFactory import IServiceMethodFactory
 
 
 requestFuncTemplate = str("def {0}(suppressResponse=False):\n"
                           "    zeroSubFunction = [0x80] if suppressResponse else [0x00]\n"
-                          "    return {1} + zeroSubFunction")									 
+                          "    return {1} + zeroSubFunction")
 
 # Note: we do not need to cater for response suppression checking as nothing to check if response is suppressed - always unsuppressed
 checkFunctionTemplate = str("def {0}(input):\n"
@@ -79,7 +79,7 @@ class TesterPresentMethodFactory(IServiceMethodFactory):
     ##
     # @brief method to create the function to check the positive response for validity
     # Note: the response for tester present is simplistic, so the details have been hardcoded;
-    # this function is really just checking that the service is supported before creating the 
+    # this function is really just checking that the service is supported before creating the
     # the hardcoded check function.
     @staticmethod
     def create_checkPositiveResponseFunction(diagServiceElement, xmlElements):
@@ -114,11 +114,11 @@ class TesterPresentMethodFactory(IServiceMethodFactory):
         except:
             pass
 
-        # The values in the response are SID, resetType, and optionally the powerDownTime (only for resetType 0x04). Checking is handled in the check function, 
+        # The values in the response are SID, resetType, and optionally the powerDownTime (only for resetType 0x04). Checking is handled in the check function,
         # so must be present and ok. This function is only required to return the resetType and powerDownTime (if present).
 
         positiveResponseElement = xmlElements[(diagServiceElement.find('POS-RESPONSE-REFS')).find('POS-RESPONSE-REF').attrib['ID-REF']]
-		
+
         shortName = diagServiceElement.find('SHORT-NAME').text
         encodePositiveResponseFunctionName = "encode_{0}".format(shortName)
 

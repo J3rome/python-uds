@@ -10,7 +10,7 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds.uds_config_tool.SupportedServices.iContainer import iContainer
+from .iContainer import iContainer
 from types import MethodType
 
 
@@ -40,7 +40,7 @@ class ClearDTCContainer(object):
         # Call the sequence of functions to execute the RDBI request/response action ...
         # ==============================================================================
 
-        # Create the request. Note: we do not have to pre-check groupOfDTC as this action is performed by 
+        # Create the request. Note: we do not have to pre-check groupOfDTC as this action is performed by
         # the recipient (the response codes 0x13 and 0x31 provide the necessary cover of errors in the request) ...
         request = requestFunction(groupOfDTC)
 

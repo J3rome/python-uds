@@ -10,17 +10,17 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 import xml.etree.ElementTree as ET
-from uds.uds_config_tool import DecodeFunctions
+from .. import DecodeFunctions
 import sys
-from uds.uds_config_tool.FunctionCreation.iServiceMethodFactory import IServiceMethodFactory
+from .iServiceMethodFactory import IServiceMethodFactory
 
 SUPPRESS_RESPONSE_BIT = 0x80
-									 
+
 requestFuncTemplate = str("def {0}(suppressResponse=False):\n"
                           "    sessionType = {2}\n"
                           "    suppressBit = {3} if suppressResponse else 0x00\n"
                           "    sessionType[0] += suppressBit\n"
-                          "    return {1} + sessionType")	
+                          "    return {1} + sessionType")
 
 # Note: we do not need to cater for response suppression checking as nothing to check if response is suppressed - always unsuppressed
 checkFunctionTemplate = str("def {0}(input):\n"
@@ -189,10 +189,10 @@ class DiagnosticSessionControlMethodFactory(IServiceMethodFactory):
         except:
             pass
 
-        # The values in the response are SID, diagnosticSessionType, and session parameters. Checking is handled in the check function, 
+        # The values in the response are SID, diagnosticSessionType, and session parameters. Checking is handled in the check function,
         # so must be present and ok. This function is only required to return the diagnosticSessionType, and session parameters.
         positiveResponseElement = xmlElements[(diagServiceElement.find('POS-RESPONSE-REFS')).find('POS-RESPONSE-REF').attrib['ID-REF']]
-		
+
         shortName = diagServiceElement.find('SHORT-NAME').text
         encodePositiveResponseFunctionName = "encode_{0}".format(shortName)
 

@@ -10,9 +10,9 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds.uds_config_tool import DecodeFunctions
+from .. import DecodeFunctions
 import sys
-from uds.uds_config_tool.FunctionCreation.iServiceMethodFactory import IServiceMethodFactory
+from .iServiceMethodFactory import IServiceMethodFactory
 
 
 # When encode the dataRecord for transmission we have to allow for multiple elements in the data record
@@ -23,7 +23,7 @@ requestFuncTemplate = str("def {0}(dataRecord):\n"
                           "        drDict = dict(dataRecord)\n"
                           "        {3}\n"
                           "{4}\n"
-                          "    return {1} + {2} + encoded")									 
+                          "    return {1} + {2} + encoded")
 
 
 checkFunctionTemplate = str("def {0}(input):\n"
@@ -114,11 +114,11 @@ The following encoding types may be required at some stage, but are not currentl
     A_UTF8STRING: string, UTF-8 encoded
     A_UNICODE2STRING: string, UCS-2 encoded
     A_BYTEFIELD: Field of bytes
-	
+
 Also, we will most need to handle scaling at some stage within DecodeFunctions.py (for RDBI at the very least)
                 """
 
-                # 
+                #
                 encodeFunctions.append("encoded += {1}".format(longName,
                                                                  functionStringList))
                 encodeFunction = "    else:\n        encoded = {1}".format(longName,functionStringSingle)
@@ -126,7 +126,7 @@ Also, we will most need to handle scaling at some stage within DecodeFunctions.p
 
 
         # If we have only a single value for the dataRecord to send, then we can simply suppress the single value sending option.
-        # Note: in the reverse case, we do not suppress the dictionary method of sending, as this allows extra flexibility, allowing 
+        # Note: in the reverse case, we do not suppress the dictionary method of sending, as this allows extra flexibility, allowing
         # a user to use a consistent list format in all situations if desired.
         if len(encodeFunctions) > 1:
             encodeFunction = ""
@@ -204,12 +204,12 @@ Also, we will most need to handle scaling at some stage within DecodeFunctions.p
     # @brief method to encode the positive response from the raw type to it physical representation
     @staticmethod
     def create_encodePositiveResponseFunction(diagServiceElement, xmlElements):
-        # There's nothing to extract here! The only value in the response is the DID, checking of which is handled in the check function, 
+        # There's nothing to extract here! The only value in the response is the DID, checking of which is handled in the check function,
         # so must be present and ok. This function is only required to return the default None response.
-		
+
         shortName = diagServiceElement.find('SHORT-NAME').text
         encodePositiveResponseFunctionName = "encode_{0}".format(shortName)
-		
+
         encodeFunctionString = encodePositiveResponseFuncTemplate.format(encodePositiveResponseFunctionName) # 0
         exec(encodeFunctionString)
         return locals()[encodePositiveResponseFunctionName]

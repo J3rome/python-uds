@@ -10,7 +10,7 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds.uds_config_tool.SupportedServices.iContainer import iContainer
+from .iContainer import iContainer
 from types import MethodType
 
 
@@ -23,7 +23,7 @@ class TransferDataContainer(object):
         self.checkFunctions = {}
         self.negativeResponseFunctions = {}
         self.positiveResponseFunctions = {}
- 
+
 
     ##
     # @brief this method is bound to an external Uds object, referenced by target, so that it can be called
@@ -55,7 +55,7 @@ class TransferDataContainer(object):
         # Call the sequence of functions to execute the ECU Reset request/response action ...
         # ==============================================================================
 
-        # Create the request. Note: we do not have to pre-check the dataRecord as this action is performed by 
+        # Create the request. Note: we do not have to pre-check the dataRecord as this action is performed by
         # the recipient (the response codes 0x?? and 0x?? provide the necessary cover of errors in the request) ...
         request = requestFunction(blockSequenceCounter,transferRequestParameterRecord)
 

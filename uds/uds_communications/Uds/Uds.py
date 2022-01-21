@@ -10,10 +10,10 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds.uds_config_tool.IHexFunctions import ihexFile as ihexFileParser
-from uds.uds_config_tool.ISOStandard.ISOStandard import IsoDataFormatIdentifier
-from uds import Config
-from uds import TpFactory
+from ...uds_config_tool.IHexFunctions import ihexFile as ihexFileParser
+from ...uds_config_tool.ISOStandard.ISOStandard import IsoDataFormatIdentifier
+from ... import Config
+from ... import TpFactory
 from os import path
 import threading
 
@@ -91,7 +91,7 @@ class Uds(object):
         if value is not None:
             self.__ihexFile = ihexFileParser(value)
 
-    
+
     ##
     # @brief Currently only called from transferFile to transfer ihex files
     def transferIHexFile(self,transmitChunkSize=None,compressionMethod=None):
@@ -126,7 +126,7 @@ class Uds(object):
 
         response = None
 
-        # We're moving to threaded operation, so putting a lock around the send operation. 
+        # We're moving to threaded operation, so putting a lock around the send operation.
         self.sendLock.acquire()
         try:
             a = self.tp.send(msg, functionalReq)
@@ -143,12 +143,12 @@ class Uds(object):
                 if not ((response[0] == 0x7F) and (response[2] == 0x78)):
                     break
 
-        # If the diagnostic session control service is supported, record the sending time for possible use by the tester present functionality (again, if present) ...		
+        # If the diagnostic session control service is supported, record the sending time for possible use by the tester present functionality (again, if present) ...
         try:
             self.sessionSetLastSend()
         except:
             pass  # ... if the service isn't present, just ignore
-			
+
         # Lets go of the hold on transmissions - allows test present to resume operation (if it's running)
         self.__transmissionActive_flag = False
         #print(("__transmissionActive_flag cleared:",self.__transmissionActive_flag))
@@ -158,7 +158,7 @@ class Uds(object):
     def disconnect(self):
 
         self.tp.closeConnection()
-        
+
     ##
     # @brief
     def isTransmitting(self):

@@ -10,7 +10,7 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds.uds_config_tool.SupportedServices.iContainer import iContainer
+from iContainer import iContainer
 from types import MethodType
 
 
@@ -161,7 +161,3 @@ class ReadDataByIdentifierContainer(object):
 if __name__ == "__main__":
 
     pass
-
-
-
-

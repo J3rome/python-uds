@@ -13,18 +13,17 @@ import can
 from can.interfaces import pcan, vector
 from time import sleep
 
-from uds import iTp
-from uds import ResettableTimer
-from uds import fillArray
-from uds.uds_communications.TransportProtocols.Can.CanTpTypes import CanTpAddressingTypes, CanTpState, \
-    CanTpMessageType, CanTpFsTypes, CanTpMTypes
-from uds.uds_communications.TransportProtocols.Can.CanTpTypes import CANTP_MAX_PAYLOAD_LENGTH, SINGLE_FRAME_DL_INDEX, \
+from .... import iTp
+from .... import ResettableTimer
+from .... import fillArray
+from .CanTpTypes import CanTpAddressingTypes, CanTpState, CanTpMessageType, CanTpFsTypes, CanTpMTypes
+from .CanTpTypes import CANTP_MAX_PAYLOAD_LENGTH, SINGLE_FRAME_DL_INDEX, \
     FIRST_FRAME_DL_INDEX_HIGH, FIRST_FRAME_DL_INDEX_LOW, FC_BS_INDEX, FC_STMIN_INDEX, N_PCI_INDEX, \
     FIRST_FRAME_DATA_START_INDEX, SINGLE_FRAME_DATA_START_INDEX, CONSECUTIVE_FRAME_SEQUENCE_NUMBER_INDEX, \
     CONSECUTIVE_FRAME_SEQUENCE_DATA_START_INDEX, FLOW_CONTROL_BS_INDEX, FLOW_CONTROL_STMIN_INDEX
-from uds import CanConnectionFactory
-#from uds import CanConnection
-from uds import Config
+from .... import CanConnectionFactory
+#from .... import CanConnection
+from .... import Config
 
 from os import path
 

@@ -10,8 +10,8 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds.uds_config_tool import DecodeFunctions
-from uds.uds_config_tool.ISOStandard.ISOStandard import IsoDataFormatIdentifier
+from .. import DecodeFunctions
+from .ISOStandard.ISOStandard import IsoDataFormatIdentifier
 from struct import pack, unpack
 from time import sleep, time
 from enum import IntEnum
@@ -87,7 +87,7 @@ class ihexData(object):
             if len(chunk) != 0:
                 self.__sendChunks.append(chunk)
         if self.__sendChunks is None:
-            return []		
+            return []
         return self.__sendChunks
 
     @property
@@ -170,7 +170,7 @@ class ihexFile(object):
                 if nextAddress is None:
                     currentBlock.startAddress = baseAddress + address
 
-                # As each line of data is individually addressed, there may be disconuities present in the data. 
+                # As each line of data is individually addressed, there may be disconuities present in the data.
                 # If so (i.e. a gap in the addressing), and a continuous record is required, then pad the data.
                 # NOTE: by default, padding is expected.
                 if nextAddress is not None:
@@ -187,7 +187,7 @@ class ihexFile(object):
             elif recordType == ihexRecordType.ExtendedLinearAddress:   # ... new block - append any existing block to the blocklist or initialise the current block record
                 if currentBlock is not None:
                     # IMPORTANT NOTE (possible TODO): Richard indicated that the last data line may need some tail end padding - if that's the case, we would know about it
-                    # till here, so the need for such padidng would have to be detected here and added (e.g. check a "required" flag, and if true, run a moduls op on 
+                    # till here, so the need for such padidng would have to be detected here and added (e.g. check a "required" flag, and if true, run a moduls op on
                     # block length to detect if padding needed, then add padding bytes, as above in continuousBlocking case).
                     self.__blocks.append(currentBlock)
                 currentBlock = ihexData()  #... start the new block
@@ -239,7 +239,7 @@ class ihexFile(object):
 
     def transmitChunks(self, sendChunksize=None):  # ... initialising or re-setting of the chunk size is allowed here for convenience.
         if sendChunksize is not None:
-            self.transmitChunksize = sendChunksize		
+            self.transmitChunksize = sendChunksize
         return sum([self.__blocks[i].transmitChunks() for i in range(self.numBlocks)],[])
 
     @property
@@ -265,7 +265,7 @@ if __name__ == "__main__":
 
     #transmitChunks = sum([app_blocks.block[i].transmitChunks(sendChunksize=1280) for i in range(app_blocks.numBlocks)],[])
     #print(("transmit total chunks : ", len(transmitChunks)))
-	
+
     #print(("transmit start address (all) : ", app_blocks.transmitAddress))
     #print(("transmit start address (block 0) : ", app_blocks.block[0].transmitAddress))
     #print(("transmit start address (block 1) : ", app_blocks.block[1].transmitAddress))
@@ -287,7 +287,3 @@ if __name__ == "__main__":
     ....
     a = e400.transferExit()
     """
-	
-	
-
-

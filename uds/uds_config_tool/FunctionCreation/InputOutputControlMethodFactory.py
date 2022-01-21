@@ -10,9 +10,9 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds.uds_config_tool import DecodeFunctions
+from .. import DecodeFunctions
 import sys
-from uds.uds_config_tool.FunctionCreation.iServiceMethodFactory import IServiceMethodFactory
+from .iServiceMethodFactory import IServiceMethodFactory
 
 
 # When encode the dataRecord for transmission we allow for multiple elements in the data record,
@@ -23,7 +23,7 @@ requestFuncTemplate = str("def {0}(dataRecord):\n"
                           "        drDict = dict(dataRecord)\n"
                           "        {4}\n"
                           "{5}\n"
-                          "    return {1} + {2} + {3} + encoded")											 
+                          "    return {1} + {2} + {3} + encoded")
 
 checkFunctionTemplate = str("def {0}(input):\n"
                             "    serviceIdExpected = {1}\n"
@@ -110,7 +110,7 @@ class InputOutputControlMethodFactory(IServiceMethodFactory):
                     functionStringList = "drDict['{0}']".format(longName)
                     functionStringSingle = "dataRecord"
 
-                # 
+                #
                 encodeFunctions.append("encoded += {1}".format(longName,
                                                                  functionStringList))
                 encodeFunction = "    else:\n        encoded = {1}".format(longName,functionStringSingle)
@@ -236,7 +236,7 @@ class InputOutputControlMethodFactory(IServiceMethodFactory):
         # The values in the response include SID and DID, but these do not need to be returned (and already checked in the check function).
 
         positiveResponseElement = xmlElements[(diagServiceElement.find('POS-RESPONSE-REFS')).find('POS-RESPONSE-REF').attrib['ID-REF']]
-		
+
         shortName = diagServiceElement.find('SHORT-NAME').text
         encodePositiveResponseFunctionName = "encode_{0}".format(shortName)
 

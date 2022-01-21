@@ -10,9 +10,9 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds.uds_config_tool import DecodeFunctions
+from .. import DecodeFunctions
 import sys
-from uds.uds_config_tool.FunctionCreation.iServiceMethodFactory import IServiceMethodFactory
+from .iServiceMethodFactory import IServiceMethodFactory
 
 SUPPRESS_RESPONSE_BIT = 0x80
 
@@ -26,7 +26,7 @@ requestFuncTemplate = str("def {0}(optionRecord,suppressResponse=False):\n"
                           "            drDict = dict(optionRecord)\n"
                           "            {4}\n"
                           "{5}\n"
-                          "    return {1} + controlType + {3} + encoded")						  
+                          "    return {1} + controlType + {3} + encoded")
 
 # Note: we do not need to cater for response suppression checking as nothing to check if response is suppressed - always unsuppressed
 checkFunctionTemplate = str("def {0}(input):\n"
@@ -138,11 +138,11 @@ The following encoding types may be required at some stage, but are not currentl
     A_UTF8STRING: string, UTF-8 encoded
     A_UNICODE2STRING: string, UCS-2 encoded
     A_BYTEFIELD: Field of bytes
-	
+
 Also, we will most need to handle scaling at some stage within DecodeFunctions.py (for RDBI at the very least)
                     """
 
-                    # 
+                    #
                     encodeFunctions.append("encoded += {1}".format(longName,functionStringList))
                     encodeFunction = "        else:\n            encoded = {1}".format(longName,functionStringSingle)
 
@@ -159,8 +159,8 @@ Also, we will most need to handle scaling at some stage within DecodeFunctions.p
                                                 SUPPRESS_RESPONSE_BIT) # 6
         exec(funcString)
         return (locals()[shortName],str(controlType))
-		
-		
+
+
     ##
     # @brief method to create the function to check the positive response for validity
     @staticmethod
@@ -267,11 +267,11 @@ Also, we will most need to handle scaling at some stage within DecodeFunctions.p
         except:
             pass
 
-        # The values in the response are SID, resetType, and optionally the powerDownTime (only for resetType 0x04). Checking is handled in the check function, 
+        # The values in the response are SID, resetType, and optionally the powerDownTime (only for resetType 0x04). Checking is handled in the check function,
         # so must be present and ok. This function is only required to return the resetType and powerDownTime (if present).
 
         positiveResponseElement = xmlElements[(diagServiceElement.find('POS-RESPONSE-REFS')).find('POS-RESPONSE-REF').attrib['ID-REF']]
-		
+
         shortName = diagServiceElement.find('SHORT-NAME').text
         encodePositiveResponseFunctionName = "encode_{0}".format(shortName)
 

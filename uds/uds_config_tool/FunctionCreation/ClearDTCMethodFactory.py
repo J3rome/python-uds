@@ -10,16 +10,16 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds.uds_config_tool import DecodeFunctions
+from .. import DecodeFunctions
 import sys
-from uds.uds_config_tool.FunctionCreation.iServiceMethodFactory import IServiceMethodFactory
+from .iServiceMethodFactory import IServiceMethodFactory
 
 
 # When encode the dataRecord for transmission we have to allow for multiple elements in the data record
 # i.e. 'value1' - for a single value, or [('param1','value1'),('param2','value2')]  for more complex data records
 requestFuncTemplate = str("def {0}(groupOfDTC):\n"
                           "    {2}\n"
-                          "    return {1} + encoded")									 
+                          "    return {1} + encoded")
 
 
 checkFunctionTemplate = str("def {0}(input):\n"
@@ -128,12 +128,12 @@ class ClearDTCMethodFactory(IServiceMethodFactory):
     # @brief method to encode the positive response from the raw type to it physical representation
     @staticmethod
     def create_encodePositiveResponseFunction(diagServiceElement, xmlElements):
-        # There's nothing to extract here! The only value in the response is the DID, checking of which is handled in the check function, 
+        # There's nothing to extract here! The only value in the response is the DID, checking of which is handled in the check function,
         # so must be present and ok. This function is only required to return the default None response.
-		
+
         shortName = diagServiceElement.find('SHORT-NAME').text
         encodePositiveResponseFunctionName = "encode_{0}".format(shortName)
-		
+
         encodeFunctionString = encodePositiveResponseFuncTemplate.format(encodePositiveResponseFunctionName) # 0
         exec(encodeFunctionString)
         return locals()[encodePositiveResponseFunctionName]

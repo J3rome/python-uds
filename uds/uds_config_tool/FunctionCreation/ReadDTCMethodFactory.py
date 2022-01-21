@@ -10,9 +10,9 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from uds.uds_config_tool import DecodeFunctions
+from .. import DecodeFunctions
 import sys
-from uds.uds_config_tool.FunctionCreation.iServiceMethodFactory import IServiceMethodFactory
+from .iServiceMethodFactory import IServiceMethodFactory
 
 
 # Note: the request is not the simplest to parse from the ODX, so paritally hardcoding this one again (for now at least)
@@ -38,8 +38,8 @@ encodePositiveResponseFuncTemplate = str("def {0}(input):\n"
                                          "    retval = None\n"
                                          "{1}\n"
                                          "    return retval")
-							
-							
+
+
 class ReadDTCMethodFactory(IServiceMethodFactory):
 
     ##
@@ -173,13 +173,13 @@ class ReadDTCMethodFactory(IServiceMethodFactory):
     # @brief method to encode the positive response from the raw type to it physical representation
     @staticmethod
     def create_encodePositiveResponseFunction(diagServiceElement, xmlElements):
-        # There's nothing to extract here! The only value in the response is the DID, checking of which is handled in the check function, 
+        # There's nothing to extract here! The only value in the response is the DID, checking of which is handled in the check function,
         # so must be present and ok. This function is only required to return the default None response.
-		
+
         shortName = diagServiceElement.find('SHORT-NAME').text
         encodePositiveResponseFunctionName = "encode_{0}".format(shortName)
         positiveResponseElement = xmlElements[(diagServiceElement.find('POS-RESPONSE-REFS')).find('POS-RESPONSE-REF').attrib['ID-REF']]
-		
+
         paramsElement = positiveResponseElement.find('PARAMS')
         subfunctionResponse = ""
 

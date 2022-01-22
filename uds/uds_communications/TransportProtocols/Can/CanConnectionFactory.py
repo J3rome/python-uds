@@ -18,7 +18,11 @@ class CanConnectionFactory(object):
     @staticmethod
     def __call__(callback=None, filter=None, configPath=None, **kwargs):
 
-        CanConnectionFactory.loadConfiguration(configPath)
+        if "config" in kwargs and kwargs['config'] is not None:
+            CanConnectionFactory.config = kwargs['config']
+        else:
+            CanConnectionFactory.loadConfiguration(configPath)
+
         CanConnectionFactory.checkKwargs(**kwargs)
 
         # check config file and load
@@ -34,6 +38,18 @@ class CanConnectionFactory(object):
                 CanConnectionFactory.connections[connectionName].addCallback(callback)
                 CanConnectionFactory.connections[connectionName].addFilter(filter)
             return CanConnectionFactory.connections[connectionName]
+
+        elif connectionType == 'pre_instantiated_can_bus':
+            if 'canBus' not in kwargs or kwargs['canBus'] is None:
+                raise Exception(f"Must provide a pre instantiated python-can Bus object when selecting '{connectionType}'")
+
+            if connectionType not in CanConnectionFactory.connections:
+                CanConnectionFactory.connections[connectionType] = CanConnection(callback, filter,
+                                                                                 kwargs['canBus'])
+            else:
+                CanConnectionFactory.connections[connectionType].addCallback(callback)
+                CanConnectionFactory.connections[connectionType].addFilter(filter)
+            return CanConnectionFactory.connections[connectionType]
 
         elif connectionType == 'peak':
             channel = CanConnectionFactory.config['peak']['device']

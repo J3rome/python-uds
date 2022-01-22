@@ -32,7 +32,11 @@ class Uds(object):
         self.__P2_CAN_Client = None
         self.__P2_CAN_Server = None
 
-        self.__loadConfiguration(configPath)
+        if "config" in kwargs and kwargs['config'] is not None:
+            self.__config = kwargs['config']
+        else:
+            self.__loadConfiguration(configPath)
+
         self.__checkKwargs(**kwargs)
 
         self.__transportProtocol = self.__config['uds']['transportProtocol']

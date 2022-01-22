@@ -40,18 +40,22 @@ class CanTp(iTp):
 
     ##
     # @brief constructor for the CanTp object
-    def __init__(self, configPath=None, **kwargs):
+    def __init__(self, configPath=None, can_connection=None, **kwargs):
 
         # perform the instance config
         self.__config = None
 
-        self.__loadConfiguration(configPath)
+        if "config" in kwargs and kwargs['config'] is not None:
+            self.__config = kwargs['config']
+        else:
+            self.__loadConfiguration(configPath)
+
         self.__checkKwargs(**kwargs)
 
         # load variables from the config
         self.__N_AE = int(self.__config['canTp']['N_AE'], 16)
-        self.__N_TA = int(self.__config['canTp']['N_TA'], 16)
-        self.__N_SA = int(self.__config['canTp']['N_SA'], 16)
+        #self.__N_TA = int(self.__config['canTp']['N_TA'], 16)
+        #self.__N_SA = int(self.__config['canTp']['N_SA'], 16)
 
         Mtype = self.__config['canTp']['Mtype']
         if (Mtype == "DIAGNOSTICS"):

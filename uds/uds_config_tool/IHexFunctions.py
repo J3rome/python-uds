@@ -10,7 +10,7 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from .. import DecodeFunctions
+from . import DecodeFunctions
 from .ISOStandard.ISOStandard import IsoDataFormatIdentifier
 from struct import pack, unpack
 from time import sleep, time

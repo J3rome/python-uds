@@ -10,7 +10,7 @@ __email__ = "richard.clubb@embeduk.com"
 __status__ = "Development"
 
 
-from iContainer import iContainer
+from .iContainer import iContainer
 from types import MethodType
 
 

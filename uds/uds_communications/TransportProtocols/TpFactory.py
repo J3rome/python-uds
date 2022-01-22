@@ -12,7 +12,7 @@ __status__ = "Development"
 
 from ... import Config
 from ... import CanTp
-from ... import LinTp
+#from ... import LinTp
 from ... import TestTp
 from os import path
 

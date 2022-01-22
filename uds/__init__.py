@@ -19,8 +19,8 @@ from .uds_communications.TransportProtocols.Can.CanTp import CanTp
 from .uds_communications.TransportProtocols.Can.CanConnection import CanConnection
 
 # LIN imports
-from .uds_communications.TransportProtocols.Lin import LinTpTypes
-from .uds_communications.TransportProtocols.Lin.LinTp import LinTp
+#from .uds_communications.TransportProtocols.Lin import LinTpTypes
+#from .uds_communications.TransportProtocols.Lin.LinTp import LinTp
 
 # Test Transport Protocol
 from .uds_communications.TransportProtocols.Test.TestTp import TestTp
